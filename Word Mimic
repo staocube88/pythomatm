@@ -1,0 +1,14 @@
+stmt1 = ["Putin,", "Hillary,", "Obama", "Fake News,", "Mexico,", "Arnold Schwarzenegger", "The Democrats"]
+stmt2 = ["no talent,", "on the way down,", "really poor numbers,", "nasty tone,", "looking like a fool,", "bad hombre,"]
+stmt3 = ["got destroyed by my ratings.", "rigged the election.", "had a much smaller crowd.", "will pay for the wall."]
+stmt4 = ["So sad", "Apologize", "So true", "Media won't report", "Big trouble", "Fantastic job", "Stay tuned"]
+
+word_guess = [stmt1, stmt2, stmt3, stmt4]
+
+word_mimic = []
+
+for stmt in word_guess:
+    r = random.randint(0, len(stmt) - 1)
+    word_mimic.append(part[r])
+
+print(" ".join(word_mimic) + "!")
