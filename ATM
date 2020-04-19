@@ -1,0 +1,26 @@
+class ATM():
+    def __init__(self, start, pin):
+        self.balance=start
+        self.pin=pin
+    def inquiry(self):
+        print(self.balance)
+    def deposit(self, money):
+        self.balance += money
+    def withdraw(self,money,pin):
+        #put for  loop here to counter  it incorrect pin was inserted 3 times
+        if pin==self.pin:
+            if self.balance>=(money .__sub__(500)):
+                self.balance-=money
+            else:
+                print("You can only withdraw " +"#"+str(self.balance))
+        else:
+            print("Incorrect PIN, Please Try Again")
+            
+
+accNo=ATM(1000,"8765")
+accNo.inquiry()
+accNo.deposit(3000)
+accNo.inquiry()
+accNo.withdraw(2400,"8765")
+accNo.inquiry()
+accNo.withdraw(2500,"8795")
