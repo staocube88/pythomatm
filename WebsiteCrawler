@@ -1,0 +1,56 @@
+import requests
+from bs4 import BeautifulSoup
+import time
+from urllib.parse import urljoin
+
+#joinedurl=urljoin(url,"./img/1.jpg")
+#print(joinedurl)
+
+class CrawlArticle():
+    def __init__(self, title, emoji, content, image):
+        self.title = title
+        self.emoji = emoji
+        self.content=content
+        self.image=image
+
+class ArticleFetchers():
+    def fetch(self):
+        url="http://python.beispiel.programmierenlernen.io/index.php"
+       
+      #  articles=[]
+        
+        while url !="":
+            print(url)
+            time.sleep(1)
+            message =requests.get(url)
+            doc = BeautifulSoup(message.text, "html.parser")
+
+            for card in doc.select(".card"):
+                title=card.select(".card-title span")[1].text
+                emoji=card.select_one(".emoji").text
+                content=card.select_one(".card-text").text
+                image=urljoin(url,card.select_one("img").attrs["src"])
+               # crawled = CrawlArticle(title,emoji,content,image)
+               # articles.append(crawled)
+                yield CrawlArticle(title,emoji,content,image)
+                
+            next_btn =doc.select_one(".navigation .btn")
+            if next_btn:
+                next_link =next_btn.attrs["href"]
+                next_link = urljoin(url, next_link)
+                url=next_link
+                print(next_link)
+            else:
+                url=""
+                       
+      #  return articles
+       
+    
+fetcher = ArticleFetchers()
+counter=0
+fetcher.fetch()
+for article in fetcher.fetch():
+    if counter==10:
+        break
+    counter +=1
+    print(article.emoji+" : "+article.title)
